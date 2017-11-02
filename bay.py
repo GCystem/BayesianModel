@@ -1,11 +1,13 @@
-import csv
-import random
-import math
-
 import numpy as np
 from sklearn import linear_model
 from sklearn.naive_bayes import GaussianNB
 import pickle
+
+from flask import Flask, request, Response, json, abort
+from flask import jsonify
+
+############# FLASK
+app = Flask(__name__)
 
 ############# PYTHON VALUE PASSING
 V = np.array([]) # store INPUT
@@ -53,10 +55,11 @@ def loadCSV(file, X, Y):
 	# 			Y.append(float(row['Value at Median $ per Sq. Ft.(2017)']))
 	# 		t += 1
 
-
-def main():
+@app.route('/train', methods = ['GET'])
+def train():
 	X = np.array([0,1,2,3,4,5,6,7,8,9,10,11,12])
 	Y = np.array([0])
+	print("TRAINING")
 	loadCSV('test.csv', X, Y)
 
 	# print(V)
@@ -64,8 +67,10 @@ def main():
 
 	clf = linear_model.BayesianRidge()
 	clf.fit(V,U)
-	print(clf.predict([[0, 37.3084232, -121.8951796, 17108.0, 0.0, 13200.0, 0.0, 1900.0, 1327.0, 8.0, 4.0, 2.0, 95125.0]]))
+	res = clf.predict([[0, 37.3084232, -121.8951796, 17108.0, 0.0, 13200.0, 0.0, 1900.0, 1327.0, 8.0, 4.0, 2.0, 95125.0]])
 
+	print(res[0])
+	return jsonify(result = res[0])
 
 	################### SAVE/LOAD Model ################################
 	# pickle.dump(clf, open('trained_model.sav', 'wb'))
@@ -73,4 +78,5 @@ def main():
 	# print(loaded_model.predict([[0, 37.3084232, -121.8951796,17108.0, 0.0, 13200.0, 0.0, 1900.0, 1327.0, 8.0, 4.0, 2.0, 95125.0]]))
 
 if __name__ == '__main__':
-	main()
+	app.run(host='0.0.0.0', port=1314, debug=True)
+	

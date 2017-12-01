@@ -1,0 +1,25 @@
+{
+    "id" : "...",
+    "lat" : "...",
+    "lng" : "...",
+    "tax_rate_area" : "...",
+    "neighborhood" : "...",
+    "lot_sqft" : "...",
+    "property_class" : "...",
+    "year_built" : "...",
+    "sqft" : "...",
+    "rooms" : "...",
+    "bedrooms" : "...",
+    "bathrooms" : "...",
+    "zip_code" : "..."
+}
+
+{
+    "msg" : "success",
+    "result" : "..."
+}
+
+{
+    "msg" : "fail",
+    "result" : "..."
+}
